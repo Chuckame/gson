@@ -60,7 +60,7 @@ public final class ArrayTypeAdapter<E> extends TypeAdapter<Object> {
     this.componentType = componentType;
   }
 
-  @Override public Object read(JsonReader in) throws IOException {
+  @Override public Object read(JsonReader in, Object parent) throws IOException {
     if (in.peek() == JsonToken.NULL) {
       in.nextNull();
       return null;
@@ -69,7 +69,7 @@ public final class ArrayTypeAdapter<E> extends TypeAdapter<Object> {
     List<E> list = new ArrayList<E>();
     in.beginArray();
     while (in.hasNext()) {
-      E instance = componentTypeAdapter.read(in);
+      E instance = componentTypeAdapter.read(in, parent);
       list.add(instance);
     }
     in.endArray();

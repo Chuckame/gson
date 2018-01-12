@@ -67,7 +67,7 @@ public final class DateTypeAdapter extends TypeAdapter<Date> {
     }
   }
 
-  @Override public Date read(JsonReader in) throws IOException {
+  @Override public Date read(JsonReader in, Object parent) throws IOException {
     if (in.peek() == JsonToken.NULL) {
       in.nextNull();
       return null;

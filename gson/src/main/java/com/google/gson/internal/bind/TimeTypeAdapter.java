@@ -47,7 +47,7 @@ public final class TimeTypeAdapter extends TypeAdapter<Time> {
 
   private final DateFormat format = new SimpleDateFormat("hh:mm:ss a");
 
-  @Override public synchronized Time read(JsonReader in) throws IOException {
+  @Override public synchronized Time read(JsonReader in, Object parent) throws IOException {
     if (in.peek() == JsonToken.NULL) {
       in.nextNull();
       return null;

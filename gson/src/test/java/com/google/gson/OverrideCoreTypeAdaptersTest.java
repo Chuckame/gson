@@ -30,7 +30,7 @@ public class OverrideCoreTypeAdaptersTest extends TestCase {
     @Override public void write(JsonWriter out, Boolean value) throws IOException {
       out.value(value ? 1 : 0);
     }
-    @Override public Boolean read(JsonReader in) throws IOException {
+    @Override public Boolean read(JsonReader in, Object parent) throws IOException {
       int value = in.nextInt();
       return value != 0;
     }
@@ -40,7 +40,7 @@ public class OverrideCoreTypeAdaptersTest extends TestCase {
     @Override public void write(JsonWriter out, String value) throws IOException {
       out.value(value.toUpperCase(Locale.US));
     }
-    @Override public String read(JsonReader in) throws IOException {
+    @Override public String read(JsonReader in, Object parent) throws IOException {
       return in.nextString().toLowerCase(Locale.US);
     }
   };

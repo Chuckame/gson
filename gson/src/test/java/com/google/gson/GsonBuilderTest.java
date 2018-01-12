@@ -34,7 +34,7 @@ public class GsonBuilderTest extends TestCase {
     @Override public void write(JsonWriter out, Object value) {
       throw new AssertionError();
     }
-    @Override public Object read(JsonReader in) {
+    @Override public Object read(JsonReader in, Object parent) {
       throw new AssertionError();
     }
   };

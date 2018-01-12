@@ -73,7 +73,7 @@ public final class TypeAdapters {
               + value.getName() + ". Forgot to register a type adapter?");
     }
     @Override
-    public Class read(JsonReader in) throws IOException {
+    public Class read(JsonReader in, Object parent) throws IOException {
       throw new UnsupportedOperationException(
               "Attempted to deserialize a java.lang.Class. Forgot to register a type adapter?");
     }
@@ -82,7 +82,7 @@ public final class TypeAdapters {
   public static final TypeAdapterFactory CLASS_FACTORY = newFactory(Class.class, CLASS);
 
   public static final TypeAdapter<BitSet> BIT_SET = new TypeAdapter<BitSet>() {
-    @Override public BitSet read(JsonReader in) throws IOException {
+    @Override public BitSet read(JsonReader in, Object parent) throws IOException {
       BitSet bitset = new BitSet();
       in.beginArray();
       int i = 0;
@@ -132,7 +132,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Boolean> BOOLEAN = new TypeAdapter<Boolean>() {
     @Override
-    public Boolean read(JsonReader in) throws IOException {
+    public Boolean read(JsonReader in, Object parent) throws IOException {
       JsonToken peek = in.peek();
       if (peek == JsonToken.NULL) {
         in.nextNull();
@@ -154,7 +154,7 @@ public final class TypeAdapters {
    * otherwise permitted.
    */
   public static final TypeAdapter<Boolean> BOOLEAN_AS_STRING = new TypeAdapter<Boolean>() {
-    @Override public Boolean read(JsonReader in) throws IOException {
+    @Override public Boolean read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -172,7 +172,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Number> BYTE = new TypeAdapter<Number>() {
     @Override
-    public Number read(JsonReader in) throws IOException {
+    public Number read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -195,7 +195,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Number> SHORT = new TypeAdapter<Number>() {
     @Override
-    public Number read(JsonReader in) throws IOException {
+    public Number read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -217,7 +217,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Number> INTEGER = new TypeAdapter<Number>() {
     @Override
-    public Number read(JsonReader in) throws IOException {
+    public Number read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -237,7 +237,7 @@ public final class TypeAdapters {
       = newFactory(int.class, Integer.class, INTEGER);
 
   public static final TypeAdapter<AtomicInteger> ATOMIC_INTEGER = new TypeAdapter<AtomicInteger>() {
-    @Override public AtomicInteger read(JsonReader in) throws IOException {
+    @Override public AtomicInteger read(JsonReader in, Object parent) throws IOException {
       try {
         return new AtomicInteger(in.nextInt());
       } catch (NumberFormatException e) {
@@ -252,7 +252,7 @@ public final class TypeAdapters {
       newFactory(AtomicInteger.class, TypeAdapters.ATOMIC_INTEGER);
 
   public static final TypeAdapter<AtomicBoolean> ATOMIC_BOOLEAN = new TypeAdapter<AtomicBoolean>() {
-    @Override public AtomicBoolean read(JsonReader in) throws IOException {
+    @Override public AtomicBoolean read(JsonReader in, Object parent) throws IOException {
       return new AtomicBoolean(in.nextBoolean());
     }
     @Override public void write(JsonWriter out, AtomicBoolean value) throws IOException {
@@ -263,7 +263,7 @@ public final class TypeAdapters {
       newFactory(AtomicBoolean.class, TypeAdapters.ATOMIC_BOOLEAN);
 
   public static final TypeAdapter<AtomicIntegerArray> ATOMIC_INTEGER_ARRAY = new TypeAdapter<AtomicIntegerArray>() {
-    @Override public AtomicIntegerArray read(JsonReader in) throws IOException {
+    @Override public AtomicIntegerArray read(JsonReader in, Object parent) throws IOException {
         List<Integer> list = new ArrayList<Integer>();
         in.beginArray();
         while (in.hasNext()) {
@@ -295,7 +295,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Number> LONG = new TypeAdapter<Number>() {
     @Override
-    public Number read(JsonReader in) throws IOException {
+    public Number read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -314,7 +314,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Number> FLOAT = new TypeAdapter<Number>() {
     @Override
-    public Number read(JsonReader in) throws IOException {
+    public Number read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -329,7 +329,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Number> DOUBLE = new TypeAdapter<Number>() {
     @Override
-    public Number read(JsonReader in) throws IOException {
+    public Number read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -344,7 +344,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Number> NUMBER = new TypeAdapter<Number>() {
     @Override
-    public Number read(JsonReader in) throws IOException {
+    public Number read(JsonReader in, Object parent) throws IOException {
       JsonToken jsonToken = in.peek();
       switch (jsonToken) {
       case NULL:
@@ -367,7 +367,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Character> CHARACTER = new TypeAdapter<Character>() {
     @Override
-    public Character read(JsonReader in) throws IOException {
+    public Character read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -389,7 +389,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<String> STRING = new TypeAdapter<String>() {
     @Override
-    public String read(JsonReader in) throws IOException {
+    public String read(JsonReader in, Object parent) throws IOException {
       JsonToken peek = in.peek();
       if (peek == JsonToken.NULL) {
         in.nextNull();
@@ -408,7 +408,7 @@ public final class TypeAdapters {
   };
   
   public static final TypeAdapter<BigDecimal> BIG_DECIMAL = new TypeAdapter<BigDecimal>() {
-    @Override public BigDecimal read(JsonReader in) throws IOException {
+    @Override public BigDecimal read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -426,7 +426,7 @@ public final class TypeAdapters {
   };
   
   public static final TypeAdapter<BigInteger> BIG_INTEGER = new TypeAdapter<BigInteger>() {
-    @Override public BigInteger read(JsonReader in) throws IOException {
+    @Override public BigInteger read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -447,7 +447,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<StringBuilder> STRING_BUILDER = new TypeAdapter<StringBuilder>() {
     @Override
-    public StringBuilder read(JsonReader in) throws IOException {
+    public StringBuilder read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -465,7 +465,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<StringBuffer> STRING_BUFFER = new TypeAdapter<StringBuffer>() {
     @Override
-    public StringBuffer read(JsonReader in) throws IOException {
+    public StringBuffer read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -483,7 +483,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<URL> URL = new TypeAdapter<URL>() {
     @Override
-    public URL read(JsonReader in) throws IOException {
+    public URL read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -501,7 +501,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<URI> URI = new TypeAdapter<URI>() {
     @Override
-    public URI read(JsonReader in) throws IOException {
+    public URI read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -523,7 +523,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<InetAddress> INET_ADDRESS = new TypeAdapter<InetAddress>() {
     @Override
-    public InetAddress read(JsonReader in) throws IOException {
+    public InetAddress read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -542,7 +542,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<UUID> UUID = new TypeAdapter<UUID>() {
     @Override
-    public UUID read(JsonReader in) throws IOException {
+    public UUID read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -559,7 +559,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Currency> CURRENCY = new TypeAdapter<Currency>() {
     @Override
-    public Currency read(JsonReader in) throws IOException {
+    public Currency read(JsonReader in, Object parent) throws IOException {
       return Currency.getInstance(in.nextString());
     }
     @Override
@@ -578,8 +578,8 @@ public final class TypeAdapters {
 
       final TypeAdapter<Date> dateTypeAdapter = gson.getAdapter(Date.class);
       return (TypeAdapter<T>) new TypeAdapter<Timestamp>() {
-        @Override public Timestamp read(JsonReader in) throws IOException {
-          Date date = dateTypeAdapter.read(in);
+        @Override public Timestamp read(JsonReader in, Object parent) throws IOException {
+          Date date = dateTypeAdapter.read(in, null);
           return date != null ? new Timestamp(date.getTime()) : null;
         }
 
@@ -599,7 +599,7 @@ public final class TypeAdapters {
     private static final String SECOND = "second";
 
     @Override
-    public Calendar read(JsonReader in) throws IOException {
+    public Calendar read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return  null;
@@ -660,7 +660,7 @@ public final class TypeAdapters {
 
   public static final TypeAdapter<Locale> LOCALE = new TypeAdapter<Locale>() {
     @Override
-    public Locale read(JsonReader in) throws IOException {
+    public Locale read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -696,7 +696,7 @@ public final class TypeAdapters {
   public static final TypeAdapterFactory LOCALE_FACTORY = newFactory(Locale.class, LOCALE);
 
   public static final TypeAdapter<JsonElement> JSON_ELEMENT = new TypeAdapter<JsonElement>() {
-    @Override public JsonElement read(JsonReader in) throws IOException {
+    @Override public JsonElement read(JsonReader in, Object parent) throws IOException {
       switch (in.peek()) {
       case STRING:
         return new JsonPrimitive(in.nextString());
@@ -712,7 +712,7 @@ public final class TypeAdapters {
         JsonArray array = new JsonArray();
         in.beginArray();
         while (in.hasNext()) {
-          array.add(read(in));
+          array.add(read(in, parent));
         }
         in.endArray();
         return array;
@@ -720,7 +720,7 @@ public final class TypeAdapters {
         JsonObject object = new JsonObject();
         in.beginObject();
         while (in.hasNext()) {
-          object.add(in.nextName(), read(in));
+          object.add(in.nextName(), read(in, parent));
         }
         in.endObject();
         return object;
@@ -792,7 +792,7 @@ public final class TypeAdapters {
         throw new AssertionError(e);
       }
     }
-    @Override public T read(JsonReader in) throws IOException {
+    @Override public T read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -890,8 +890,8 @@ public final class TypeAdapters {
             typeAdapter.write(out, value);
           }
 
-          @Override public T1 read(JsonReader in) throws IOException {
-            T1 result = typeAdapter.read(in);
+          @Override public T1 read(JsonReader in, Object parent) throws IOException {
+            T1 result = typeAdapter.read(in, parent);
             if (result != null && !requestedType.isInstance(result)) {
               throw new JsonSyntaxException("Expected a " + requestedType.getName()
                   + " but was " + result.getClass().getName());

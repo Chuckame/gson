@@ -51,14 +51,14 @@ public final class ObjectTypeAdapter extends TypeAdapter<Object> {
     this.gson = gson;
   }
 
-  @Override public Object read(JsonReader in) throws IOException {
+  @Override public Object read(JsonReader in, Object parent) throws IOException {
     JsonToken token = in.peek();
     switch (token) {
     case BEGIN_ARRAY:
       List<Object> list = new ArrayList<Object>();
       in.beginArray();
       while (in.hasNext()) {
-        list.add(read(in));
+        list.add(read(in, parent));
       }
       in.endArray();
       return list;
@@ -67,7 +67,7 @@ public final class ObjectTypeAdapter extends TypeAdapter<Object> {
       Map<String, Object> map = new LinkedTreeMap<String, Object>();
       in.beginObject();
       while (in.hasNext()) {
-        map.put(in.nextName(), read(in));
+        map.put(in.nextName(), read(in, parent));
       }
       in.endObject();
       return map;

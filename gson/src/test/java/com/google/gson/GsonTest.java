@@ -75,6 +75,6 @@ public final class GsonTest extends TestCase {
     @Override public void write(JsonWriter out, Object value) throws IOException {
       // Test stub.
     }
-    @Override public Object read(JsonReader in) throws IOException { return null; }
+    @Override public Object read(JsonReader in, Object parent) throws IOException { return null; }
   }
 }

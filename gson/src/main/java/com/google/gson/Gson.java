@@ -310,7 +310,7 @@ public final class Gson {
       return TypeAdapters.DOUBLE;
     }
     return new TypeAdapter<Number>() {
-      @Override public Double read(JsonReader in) throws IOException {
+      @Override public Double read(JsonReader in, Object parent) throws IOException {
         if (in.peek() == JsonToken.NULL) {
           in.nextNull();
           return null;
@@ -334,7 +334,7 @@ public final class Gson {
       return TypeAdapters.FLOAT;
     }
     return new TypeAdapter<Number>() {
-      @Override public Float read(JsonReader in) throws IOException {
+      @Override public Float read(JsonReader in, Object parent) throws IOException {
         if (in.peek() == JsonToken.NULL) {
           in.nextNull();
           return null;
@@ -366,7 +366,7 @@ public final class Gson {
       return TypeAdapters.LONG;
     }
     return new TypeAdapter<Number>() {
-      @Override public Number read(JsonReader in) throws IOException {
+      @Override public Number read(JsonReader in, Object parent) throws IOException {
         if (in.peek() == JsonToken.NULL) {
           in.nextNull();
           return null;
@@ -388,8 +388,8 @@ public final class Gson {
       @Override public void write(JsonWriter out, AtomicLong value) throws IOException {
         longAdapter.write(out, value.get());
       }
-      @Override public AtomicLong read(JsonReader in) throws IOException {
-        Number value = longAdapter.read(in);
+      @Override public AtomicLong read(JsonReader in, Object parent) throws IOException {
+        Number value = longAdapter.read(in, parent);
         return new AtomicLong(value.longValue());
       }
     }.nullSafe();
@@ -404,11 +404,11 @@ public final class Gson {
         }
         out.endArray();
       }
-      @Override public AtomicLongArray read(JsonReader in) throws IOException {
+      @Override public AtomicLongArray read(JsonReader in, Object parent) throws IOException {
         List<Long> list = new ArrayList<Long>();
         in.beginArray();
         while (in.hasNext()) {
-            long value = longAdapter.read(in).longValue();
+            long value = longAdapter.read(in, parent).longValue();
             list.add(value);
         }
         in.endArray();
@@ -919,7 +919,7 @@ public final class Gson {
       isEmpty = false;
       TypeToken<T> typeToken = (TypeToken<T>) TypeToken.get(typeOfT);
       TypeAdapter<T> typeAdapter = getAdapter(typeToken);
-      T object = typeAdapter.read(reader);
+      T object = typeAdapter.read(reader, null);
       return object;
     } catch (EOFException e) {
       /*
@@ -997,11 +997,11 @@ public final class Gson {
       delegate = typeAdapter;
     }
 
-    @Override public T read(JsonReader in) throws IOException {
+    @Override public T read(JsonReader in, Object parent) throws IOException {
       if (delegate == null) {
         throw new IllegalStateException();
       }
-      return delegate.read(in);
+      return delegate.read(in, parent);
     }
 
     @Override public void write(JsonWriter out, T value) throws IOException {

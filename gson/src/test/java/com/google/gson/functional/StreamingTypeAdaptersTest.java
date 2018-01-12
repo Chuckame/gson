@@ -99,7 +99,7 @@ public final class StreamingTypeAdaptersTest extends TestCase {
 
   private void usePersonNameAdapter() {
     TypeAdapter<Person> personNameAdapter = new TypeAdapter<Person>() {
-      @Override public Person read(JsonReader in) throws IOException {
+      @Override public Person read(JsonReader in, Object parent) throws IOException {
         String name = in.nextString();
         return new Person(name, -1);
       }
@@ -151,7 +151,7 @@ public final class StreamingTypeAdaptersTest extends TestCase {
 
   public void testNullSafe() {
     TypeAdapter<Person> typeAdapter = new TypeAdapter<Person>() {
-      @Override public Person read(JsonReader in) throws IOException {
+      @Override public Person read(JsonReader in, Object parent) throws IOException {
         String[] values = in.nextString().split(",");
         return new Person(values[0], Integer.parseInt(values[1]));
       }

@@ -67,7 +67,7 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
         @Override public void write(JsonWriter out, Part part) throws IOException {
           throw new AssertionError();
         }
-        @Override public Part read(JsonReader in) throws IOException {
+        @Override public Part read(JsonReader in, Object parent) throws IOException {
           throw new AssertionError();
         }
       }).create();
@@ -112,7 +112,7 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
     @Override public void write(JsonWriter out, Part part) throws IOException {
       out.value("PartJsonFieldAnnotationAdapter");
     }
-    @Override public Part read(JsonReader in) throws IOException {
+    @Override public Part read(JsonReader in, Object parent) throws IOException {
       in.nextString();
       return new Part("PartJsonFieldAnnotationAdapter");
     }
@@ -125,7 +125,7 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
           out.value("GizmoPartTypeAdapterFactory");
         }
         @SuppressWarnings("unchecked")
-        @Override public T read(JsonReader in) throws IOException {
+        @Override public T read(JsonReader in, Object parent) throws IOException {
           in.nextString();
           return (T) new Part("GizmoPartTypeAdapterFactory");
         }
@@ -152,7 +152,7 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
     @Override public void write(JsonWriter out, User user) throws IOException {
       out.value("UserClassAnnotationAdapter");
     }
-    @Override public User read(JsonReader in) throws IOException {
+    @Override public User read(JsonReader in, Object parent) throws IOException {
       in.nextString();
       return new User("UserClassAnnotationAdapter");
     }
@@ -171,7 +171,7 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
     @Override public void write(JsonWriter out, User user) throws IOException {
       out.value("UserFieldAnnotationAdapter");
     }
-    @Override public User read(JsonReader in) throws IOException {
+    @Override public User read(JsonReader in, Object parent) throws IOException {
       in.nextString();
       return new User("UserFieldAnnotationAdapter");
     }
@@ -181,7 +181,7 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
     @Override public void write(JsonWriter out, User user) throws IOException {
       out.value("RegisteredUserAdapter");
     }
-    @Override public User read(JsonReader in) throws IOException {
+    @Override public User read(JsonReader in, Object parent) throws IOException {
       in.nextString();
       return new User("RegisteredUserAdapter");
     }
@@ -256,7 +256,7 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
       @Override public void write(JsonWriter out, Long value) throws IOException {
         out.value(value.toString());
       }
-      @Override public Long read(JsonReader in) throws IOException {
+      @Override public Long read(JsonReader in, Object parent) throws IOException {
         return in.nextLong();
       }
     };
@@ -296,7 +296,7 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
           out.value("GizmoPartTypeAdapterFactory");
         }
         @SuppressWarnings("unchecked")
-        @Override public T read(JsonReader in) throws IOException {
+        @Override public T read(JsonReader in, Object parent) throws IOException {
           in.nextString();
           return (T) Arrays.asList(new Part("GizmoPartTypeAdapterFactory"));
         }

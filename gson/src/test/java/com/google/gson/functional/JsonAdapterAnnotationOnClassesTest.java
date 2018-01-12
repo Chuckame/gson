@@ -72,7 +72,7 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
       @Override public void write(JsonWriter out, A value) throws IOException {
         out.value("registeredAdapter");
       }
-      @Override public A read(JsonReader in) throws IOException {
+      @Override public A read(JsonReader in, Object parent) throws IOException {
         return new A(in.nextString());
       }
     };
@@ -149,7 +149,7 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
       @Override public void write(JsonWriter out, A value) throws IOException {
         out.value("jsonAdapter");
       }
-      @Override public A read(JsonReader in) throws IOException {
+      @Override public A read(JsonReader in, Object parent) throws IOException {
         in.nextString();
         return new A("jsonAdapter");
       }
@@ -169,7 +169,7 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
             out.value("jsonAdapterFactory");
           }
           @SuppressWarnings("unchecked")
-          @Override public T read(JsonReader in) throws IOException {
+          @Override public T read(JsonReader in, Object parent) throws IOException {
             in.nextString();
             return (T) new C("jsonAdapterFactory");
           }
@@ -211,7 +211,7 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
       out.endObject();
       // implement the write method
     }
-    @Override public User read(JsonReader in) throws IOException {
+    @Override public User read(JsonReader in, Object parent) throws IOException {
       // implement read: split name into firstName and lastName
       in.beginObject();
       in.nextName();
@@ -232,7 +232,7 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
     }
 
     @Override
-    public NullableClass read(JsonReader in) throws IOException {
+    public NullableClass read(JsonReader in, Object parent) throws IOException {
       in.nextString();
       return new NullableClass();
     }
@@ -245,7 +245,7 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
       out.value(value.name().toLowerCase(Locale.US));
     }
 
-    @Override public Foo read(JsonReader in) throws IOException {
+    @Override public Foo read(JsonReader in, Object parent) throws IOException {
       return Foo.valueOf(in.nextString().toUpperCase(Locale.US));
     }
   }

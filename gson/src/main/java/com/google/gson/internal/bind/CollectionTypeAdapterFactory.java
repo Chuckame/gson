@@ -70,7 +70,7 @@ public final class CollectionTypeAdapterFactory implements TypeAdapterFactory {
       this.constructor = constructor;
     }
 
-    @Override public Collection<E> read(JsonReader in) throws IOException {
+    @Override public Collection<E> read(JsonReader in, Object parent) throws IOException {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull();
         return null;
@@ -79,7 +79,7 @@ public final class CollectionTypeAdapterFactory implements TypeAdapterFactory {
       Collection<E> collection = constructor.construct();
       in.beginArray();
       while (in.hasNext()) {
-        E instance = elementTypeAdapter.read(in);
+        E instance = elementTypeAdapter.read(in, parent);
         collection.add(instance);
       }
       in.endArray();

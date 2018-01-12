@@ -719,7 +719,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
       out.value(value.getName());
     }
     @Override
-    public Class read(JsonReader in) throws IOException {
+    public Class read(JsonReader in, Object parent) throws IOException {
       String className = in.nextString();
       try {
         return Class.forName(className);
@@ -737,7 +737,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     @Override public void write(JsonWriter out, Number value) throws IOException {
       out.value(value.toString());
     }
-    @Override public Number read(JsonReader in) throws IOException {
+    @Override public Number read(JsonReader in, Object parent) throws IOException {
       try {
         return constructor.newInstance(in.nextString());
       } catch (Exception e) {

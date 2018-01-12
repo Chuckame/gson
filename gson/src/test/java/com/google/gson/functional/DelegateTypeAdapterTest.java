@@ -84,9 +84,9 @@ public class DelegateTypeAdapterTest extends TestCase {
         }
 
         @Override
-        public T read(JsonReader in) throws IOException {
+        public T read(JsonReader in, Object parent) throws IOException {
           ++numReads;
-          return delegate.read(in);
+          return delegate.read(in, parent);
         }
       };
     }

@@ -162,7 +162,7 @@ public final class RuntimeTypeAdapterFactoryFunctionalTest extends TestCase {
       }
 
       return new TypeAdapter<R>() {
-        @Override public R read(JsonReader in) throws IOException {
+        @Override public R read(JsonReader in, Object parent) throws IOException {
           JsonElement jsonElement = Streams.parse(in);
           JsonElement labelJsonElement = jsonElement.getAsJsonObject().get(typeFieldName);
           if (labelJsonElement == null) {

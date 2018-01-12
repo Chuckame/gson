@@ -157,7 +157,7 @@ public final class MapTypeAdapterFactory implements TypeAdapterFactory {
       this.constructor = constructor;
     }
 
-    @Override public Map<K, V> read(JsonReader in) throws IOException {
+    @Override public Map<K, V> read(JsonReader in, Object parent) throws IOException {
       JsonToken peek = in.peek();
       if (peek == JsonToken.NULL) {
         in.nextNull();
@@ -170,8 +170,8 @@ public final class MapTypeAdapterFactory implements TypeAdapterFactory {
         in.beginArray();
         while (in.hasNext()) {
           in.beginArray(); // entry array
-          K key = keyTypeAdapter.read(in);
-          V value = valueTypeAdapter.read(in);
+          K key = keyTypeAdapter.read(in, parent);
+          V value = valueTypeAdapter.read(in, parent);
           V replaced = map.put(key, value);
           if (replaced != null) {
             throw new JsonSyntaxException("duplicate key: " + key);
@@ -183,8 +183,8 @@ public final class MapTypeAdapterFactory implements TypeAdapterFactory {
         in.beginObject();
         while (in.hasNext()) {
           JsonReaderInternalAccess.INSTANCE.promoteNameToValue(in);
-          K key = keyTypeAdapter.read(in);
-          V value = valueTypeAdapter.read(in);
+          K key = keyTypeAdapter.read(in, parent);
+          V value = valueTypeAdapter.read(in, parent);
           V replaced = map.put(key, value);
           if (replaced != null) {
             throw new JsonSyntaxException("duplicate key: " + key);

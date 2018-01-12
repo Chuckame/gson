@@ -47,7 +47,7 @@ public final class SqlDateTypeAdapter extends TypeAdapter<java.sql.Date> {
   private final DateFormat format = new SimpleDateFormat("MMM d, yyyy");
 
   @Override
-  public synchronized java.sql.Date read(JsonReader in) throws IOException {
+  public synchronized java.sql.Date read(JsonReader in, Object parent) throws IOException {
     if (in.peek() == JsonToken.NULL) {
       in.nextNull();
       return null;

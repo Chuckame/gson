@@ -140,7 +140,7 @@ public final class TypeAdapterPrecedenceTest extends TestCase {
 
   private TypeAdapter<Foo> newTypeAdapter(final String name) {
     return new TypeAdapter<Foo>() {
-      @Override public Foo read(JsonReader in) throws IOException {
+      @Override public Foo read(JsonReader in, Object parent) throws IOException {
         return new Foo(in.nextString() + " via " + name);
       }
       @Override public void write(JsonWriter out, Foo value) throws IOException {

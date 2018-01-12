@@ -58,9 +58,9 @@ public final class TreeTypeAdapter<T> extends TypeAdapter<T> {
     this.skipPast = skipPast;
   }
 
-  @Override public T read(JsonReader in) throws IOException {
+  @Override public T read(JsonReader in, Object parent) throws IOException {
     if (deserializer == null) {
-      return delegate().read(in);
+      return delegate().read(in, parent);
     }
     JsonElement value = Streams.parse(in);
     if (value.isJsonNull()) {
