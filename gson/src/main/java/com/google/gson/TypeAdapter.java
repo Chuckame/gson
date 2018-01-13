@@ -196,7 +196,7 @@ public abstract class TypeAdapter<T> {
           reader.nextNull();
           return null;
         }
-        return TypeAdapter.this.read(reader, null);
+        return TypeAdapter.this.read(reader, parent);
       }
     };
   }
