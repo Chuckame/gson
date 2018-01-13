@@ -241,8 +241,9 @@ public abstract class TypeAdapter<T> {
   /**
    * Reads one JSON value (an array, object, string, number, boolean or null)
    * and converts it to a Java object. Returns the converted object.
- * @param parent TODO
    *
+   * @param parent Parent instance of the current read object. May be null,
+   *        but recommended in case of reflection.
    * @return the converted Java object. May be null.
    */
   public abstract T read(JsonReader in, Object parent) throws IOException;
